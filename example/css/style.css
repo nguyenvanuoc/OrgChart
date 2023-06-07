@@ -50,9 +50,12 @@
 .tree-node-children{
     padding-left: 20px;
     position: relative;
-    display: flex;
     row-gap: 20px;
     flex-direction: column;
+    display: none;
+}
+.tree-node-children.expanded{
+    display: flex;
 }
 .tree-node-children:before{
     content: "";
@@ -122,4 +125,30 @@
 
 .ui-droppable-hover{
     border:1px dashed #666;
+}
+
+.tree-org-expand{
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    position: absolute;
+    background-color: #666;
+    top: 10px;
+    bottom: 0px;
+    margin: 0px;
+    z-index: 2;
+    right: -30px;
+    font-family: 'ap';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+    cursor: pointer;
+}
+.tree-org-expand:before{
+    content: "\e9c4";
+}
+.tree-org-expand.active:before{
+    content: "\f3e4";
 }

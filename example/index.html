@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/vuesaxicon@1.0.1/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/ap8icon/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
@@ -41,95 +42,78 @@
         <div class="canvas-drag">
             <div class="w-tree-org" id="tree-container">
                 <div class="tree-node-content is-root">
-                    <div class="tree-node-inner">
-                        <div class="tree-node-text">Root</div>
+                    <div class="tree-node-text">Root</div>
+                    <div class="tree-org-expand active">
+                        
                     </div>
                 </div>
                 
-                <div class="tree-node-children is-children">
+                <div class="tree-node-children is-children expanded">
                     <div class="tree-org-node">
                         <div class="tree-node-content">
-                            <div class="tree-node-inner">
-                                <div class="tree-node-text">Child 1</div>
+                            
+                            <div class="tree-node-text">Child 1</div>
+                            <div class="tree-org-expand">
+                            
                             </div>
 
                         </div>
                         <div class="tree-node-children">
                             <div class="tree-org-node">
                                 <div class="tree-node-content">
-                                    <div class="tree-node-inner">
-                                        <div class="tree-node-text">Child 1-1</div>
-                                    </div>
+                                    <div class="tree-node-text">Child 1-1</div>
                                 </div>
                             </div>
                             <div class="tree-org-node">
                                 <div class="tree-node-content">
-                                    <div class="tree-node-inner">
-                                        <div class="tree-node-text">Child 1-2</div>
-                                    </div>
+                                    <div class="tree-node-text">Child 1-2</div>
                                 </div>
                             </div>
                             <div class="tree-org-node">
                                 <div class="tree-node-content">
-                                    <div class="tree-node-inner">
-                                        <div class="tree-node-text">Child 1-3</div>
-                                    </div>
+                                    <div class="tree-node-text">Child 1-3</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="tree-org-node">
                         <div class="tree-node-content">
-                            <div class="tree-node-inner">
-                                <div class="tree-node-text">Child 1</div>
+                            <div class="tree-node-text">Child 1</div>
+                            <div class="tree-org-expand">
+                            
                             </div>
-
                         </div>
                         <div class="tree-node-children">
                             <div class="tree-org-node">
                                 <div class="tree-node-content">
-                                    <div class="tree-node-inner">
-                                        <div class="tree-node-text">Child 1-1</div>
-                                    </div>
+                                    <div class="tree-node-text">Child 1-1</div>
                                 </div>
                             </div>
                             <div class="tree-org-node">
                                 <div class="tree-node-content">
-                                    <div class="tree-node-inner">
-                                        <div class="tree-node-text">Child 1-2</div>
-                                    </div>
+                                    <div class="tree-node-text">Child 1-2</div>
                                 </div>
                             </div>
                             <div class="tree-org-node">
                                 <div class="tree-node-content">
-                                    <div class="tree-node-inner">
-                                        <div class="tree-node-text">Child 1-3</div>
-                                    </div>
+                                    <div class="tree-node-text">Child 1-3</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="tree-org-node">
                         <div class="tree-node-content">
-                            <div class="tree-node-inner">
-                                <div class="tree-node-text">Child 1</div>
-                            </div>
-
+                            <div class="tree-node-text">Child 1</div>
                         </div>
                     </div>
                     <div class="tree-org-node">
                         <div class="tree-node-content">
-                            <div class="tree-node-inner">
-                                <div class="tree-node-text">Child 1</div>
-                            </div>
-
+                            <div class="tree-node-text">Child 1</div>
                         </div>
                     </div>
                     <div class="tree-org-node">
                         <div class="tree-node-content">
-                            <div class="tree-node-inner">
-                                <div class="tree-node-text">Child 1</div>
-                            </div>
+                            <div class="tree-node-text">Child 1</div>
 
                         </div>
                     </div>
@@ -168,6 +152,17 @@
                 $(this).addClass("active");
                  $(this).find('.btn-drag').remove();
             },
+            
+        });
+        $('.tree-org-expand').click(function(e){
+            e.stopPropagation();
+            if($(this).hasClass('active')){
+                $(this).parent().siblings().removeClass('expanded');
+                $(this).removeClass('active');
+            }else{
+                $(this).parent().siblings().addClass('expanded');
+                $(this).addClass('active');
+            }
             
         });
         var scale = 1,
