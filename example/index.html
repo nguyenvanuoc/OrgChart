@@ -1,0 +1,217 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vuesaxicon@1.0.1/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="list-drag">
+            <div class="drag-item">
+                <span class="icon isax-home"></span>
+                <span class="text-m">Home</span>
+            </div>
+            <div class="drag-item">
+                <span class="icon isax-star"></span>
+                <span class="text-m">Rating</span>
+            </div>
+            <div class="drag-item">
+                <span class="icon isax-user"></span>
+                <span class="text-m">About</span>
+            </div>
+            <div class="drag-item">
+                <span class="icon isax-bookmark"></span>
+                <span class="text-m">Bookmark</span>
+            </div>
+            <div class="drag-item">
+                <span class="icon isax-money-change"></span>
+                <span class="text-m">Finance</span>
+            </div>
+        </div>
+        <div class="canvas-drag">
+            <div class="w-tree-org" id="tree-container">
+                <div class="tree-node-content is-root">
+                    <div class="tree-node-inner">
+                        <div class="tree-node-text">Root</div>
+                    </div>
+                </div>
+                
+                <div class="tree-node-children is-children">
+                    <div class="tree-org-node">
+                        <div class="tree-node-content">
+                            <div class="tree-node-inner">
+                                <div class="tree-node-text">Child 1</div>
+                            </div>
+
+                        </div>
+                        <div class="tree-node-children">
+                            <div class="tree-org-node">
+                                <div class="tree-node-content">
+                                    <div class="tree-node-inner">
+                                        <div class="tree-node-text">Child 1-1</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-org-node">
+                                <div class="tree-node-content">
+                                    <div class="tree-node-inner">
+                                        <div class="tree-node-text">Child 1-2</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-org-node">
+                                <div class="tree-node-content">
+                                    <div class="tree-node-inner">
+                                        <div class="tree-node-text">Child 1-3</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tree-org-node">
+                        <div class="tree-node-content">
+                            <div class="tree-node-inner">
+                                <div class="tree-node-text">Child 1</div>
+                            </div>
+
+                        </div>
+                        <div class="tree-node-children">
+                            <div class="tree-org-node">
+                                <div class="tree-node-content">
+                                    <div class="tree-node-inner">
+                                        <div class="tree-node-text">Child 1-1</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-org-node">
+                                <div class="tree-node-content">
+                                    <div class="tree-node-inner">
+                                        <div class="tree-node-text">Child 1-2</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tree-org-node">
+                                <div class="tree-node-content">
+                                    <div class="tree-node-inner">
+                                        <div class="tree-node-text">Child 1-3</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tree-org-node">
+                        <div class="tree-node-content">
+                            <div class="tree-node-inner">
+                                <div class="tree-node-text">Child 1</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tree-org-node">
+                        <div class="tree-node-content">
+                            <div class="tree-node-inner">
+                                <div class="tree-node-text">Child 1</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tree-org-node">
+                        <div class="tree-node-content">
+                            <div class="tree-node-inner">
+                                <div class="tree-node-text">Child 1</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <style>
+
+    </style>
+    <script>
+        var button_drag='<button class="btn btn-outline-primary btn-drag">Drag and drop product offer</button>';
+        $(".drag-item").draggable({
+            revert: "invalid", // when not dropped, the item will revert back to its initial position
+            containment: "document",
+            helper: "clone",
+            
+        });
+        $(".tree-node-content").droppable({
+            activeClass: "ui-state-highlight",
+            appendTo: "body",
+            zIndex: 10000,
+            drop: function (event, ui) {
+                $(this).removeClass("active");
+                $(this).find('.btn-drag').remove();
+                var html= $(ui.draggable).clone(false);
+                console.log(html);
+                $(this).append(html);
+            },
+            over:function(event,ui){
+                $(this).addClass("active");
+                $(this).append(button_drag);
+            },
+            out:function(event,ui){
+                $(this).addClass("active");
+                 $(this).find('.btn-drag').remove();
+            },
+            
+        });
+        var scale = 1,
+            panning = false,
+            pointX = 0,
+            pointY = 0,
+            start = { x: 0, y: 0 },
+            zoom = document.getElementById("tree-container");
+
+        function setTransform() {
+            zoom.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
+        }
+
+        zoom.onmousedown = function (e) {
+            e.preventDefault();
+            start = { x: e.clientX - pointX, y: e.clientY - pointY };
+            panning = true;
+        }
+
+        zoom.onmouseup = function (e) {
+            panning = false;
+        }
+
+        zoom.onmousemove = function (e) {
+            e.preventDefault();
+            if (!panning) {
+                return;
+            }
+            pointX = (e.clientX - start.x);
+            pointY = (e.clientY - start.y);
+            setTransform();
+        }
+
+        zoom.onwheel = function (e) {
+            e.preventDefault();
+            var xs = (e.clientX - pointX) / scale,
+                ys = (e.clientY - pointY) / scale,
+                delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
+            (delta > 0) ? (scale *= 1.2) : (scale /= 1.2);
+            pointX = e.clientX - xs * scale;
+            pointY = e.clientY - ys * scale;
+
+            setTransform();
+        }
+    </script>
+</body>
+</html>

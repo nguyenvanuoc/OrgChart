@@ -1,0 +1,234 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="ui-widget ui-helper-clearfix">
+        <ul id="gallery" class="gallery ui-helper-reset ui-helper-clearfix">
+            <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">High Tatras</h5>
+                <img src="https://jqueryui.com/resources/demos/droppable/images/high_tatras_min.jpg"
+                    alt="The peaks of High Tatras" width="96" height="72">
+            </li>
+            <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">High Tatras 2</h5>
+                <img src="https://jqueryui.com/resources/demos/droppable/images/high_tatras2_min.jpg"
+                    alt="The chalet at the Green mountain lake" width="96" height="72">
+            </li>
+            <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">High Tatras 3</h5>
+                <img src="https://jqueryui.com/resources/demos/droppable/images/high_tatras3_min.jpg"
+                    alt="Planning the ascent" width="96" height="72">
+                
+            </li>
+            <li class="ui-widget-content ui-corner-tr">
+                <h5 class="ui-widget-header">High Tatras 4</h5>
+                <img src="https://jqueryui.com/resources/demos/droppable/images/high_tatras4_min.jpg"
+                    alt="On top of Kozi kopka" width="96" height="72">
+               
+            </li>
+        </ul>
+        <div id="trash" class="ui-widget-content results ui-state-default">
+            <h4 class="ui-widget-header">
+                Drop Items:<span id="items">0</span>
+                <!-- <span class="ui-icon ui-icon-trash"></span> Trash -->
+            </h4>
+        </div>
+        <button type="button" id="save">Save</button>
+        <button type="button" id="clear">Clear</button>
+        <p>Stored Items</p>
+        <ul id="storedItems">
+        </ul>
+    </div>
+    <style>
+        ul{
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+            display: flex;
+            column-gap: 10px;
+        }
+        .gallery h5{
+            font-size: 16px;
+
+        }
+        .gallery li{
+            cursor: move;
+            border: 1px solid #d9d9d9;
+        }
+        .results{
+            border: 1px solid #d9d9d9;
+            min-height: 120px;
+            margin-top: 40px;
+        }
+    </style>
+    <script>
+          $(function () {
+                // there's the gallery and the trash
+                var $gallery = $("#gallery"),
+                    $trash = $("#trash"),
+                    $items = $("#items");
+
+                // let the gallery items be draggable
+                $("li", $gallery).draggable({
+                    cancel: "a.ui-icon", // clicking an icon won't initiate dragging
+                    revert: "invalid", // when not dropped, the item will revert back to its initial position
+                    containment: "document",
+                    helper: "clone",
+                    cursor: "move"
+                });
+
+                // let the trash be droppable, accepting the gallery items
+                $trash.droppable({
+                    accept: "#gallery > li",
+                    activeClass: "ui-state-highlight",
+                    drop: function (event, ui) {
+                        deleteImage(ui.draggable);
+                    }
+                });
+
+                // let the gallery be droppable as well, accepting items from the trash
+                $gallery.droppable({
+                    accept: "#trash li",
+                    activeClass: "custom-state-active",
+                    drop: function (event, ui) {
+                        // recycleImage(ui.draggable);
+                    }
+                });
+
+            //     // image deletion function
+                var recycle_icon = "<a href='link/to/recycle/script/when/we/have/js/off' title='Recycle this image' class='ui-icon ui-icon-refresh'>Recycle image</a>";
+
+                function deleteImage($item) {
+                    var obj = cloneObject($item);
+                    var $list = $("ul", $trash).length ?
+                        $("ul", $trash) :
+                        $("<ul class='gallery ui-helper-reset'/>").appendTo($trash);
+                    obj.find("a.ui-icon-trash").remove();
+                    obj.append(recycle_icon).appendTo($list).fadeIn(function () {
+                        obj
+                            .animate({
+                                width: "48px"
+                            })
+                            .find("img")
+                            .animate({
+                                height: "36px"
+                            });
+                    });
+                    $items.text($("li", $list).length);
+                }
+
+            //     // image recycle function
+            //     var trash_icon = "<a href='link/to/trash/script/when/we/have/js/off' title='Delete this image' class='ui-icon ui-icon-trash'>Delete image</a>";
+
+            //     function recycleImage($item) {
+
+            //         $item.fadeOut(function () {
+            //             $item.remove();
+            //             $items.text($("li", $("ul", $trash)).length);
+            //         });
+            //     }
+
+            //     // image preview function, demonstrating the ui.dialog used as a modal window
+            //     function viewLargerImage($link) {
+            //         var src = $link.attr("href"),
+            //             title = $link.siblings("img").attr("alt"),
+            //             $modal = $("img[src$='" + src + "']");
+
+            //         if ($modal.length) {
+            //             $modal.dialog("open");
+            //         } else {
+            //             var img = $("<img alt='" + title + "' width='384' height='288' style='display: none; padding: 8px;' />")
+            //                 .attr("src", src).appendTo("body");
+            //             setTimeout(function () {
+            //                 img.dialog({
+            //                     title: title,
+            //                     width: 400,
+            //                     modal: true
+            //                 });
+            //             }, 1);
+            //         }
+            //     }
+
+                function cloneObject($item) {
+                    var obj = $item.clone();
+                    obj.draggable({
+                        cancel: "a.ui-icon",
+                        revert: "invalid",
+                        containment: "document",
+                        cursor: "move"
+                    });
+                    obj.click(function (event) {
+                        var $item = $(this),
+                            $target = $(event.target);
+                        if ($target.is("a.ui-icon-trash")) {
+                            deleteImage($item);
+                        } else if ($target.is("a.ui-icon-zoomin")) {
+                            viewLargerImage($target);
+                        } else if ($target.is("a.ui-icon-refresh")) {
+                            recycleImage($item);
+                        }
+
+                        return false;
+                    });
+
+                    return obj;
+                }
+
+            //     // resolve the icons behavior with event delegation
+            //     $("ul.gallery > li").click(function (event) {
+            //         var $item = $(this),
+            //             $target = $(event.target);
+            //         if ($target.is("a.ui-icon-trash")) {
+            //             deleteImage($item);
+            //         } else if ($target.is("a.ui-icon-zoomin")) {
+            //             viewLargerImage($target);
+            //         } else if ($target.is("a.ui-icon-refresh")) {
+            //             recycleImage($item);
+            //         }
+
+            //         return false;
+            //     });
+
+            //     $("button#save").click(function () {
+            //         var items = $("li", $("ul", $trash));
+            //         for (var i = 0, len = items.length; i < len; i++) {
+            //             var item = items[i];
+            //             var element = {
+            //                 title: $("h5", item).text(),
+            //                 img: $("img", item).attr("src")
+            //             }
+            //             localStorage.setItem(i, JSON.stringify(element));
+            //         }
+            //         // 保存されたことを確認する
+            //         for (var i = 0, len = localStorage.length; i < len; i++) {
+            //             var element = JSON.parse(localStorage.getItem(i));
+            //             $("ul#storedItems").append("<li> Title : " + element.title + "　File : " + element.img);
+            //         }
+            //     });
+
+            //     $("button#clear").click(function () {
+            //         localStorage.clear();
+            //         $("ul#storedItems li").remove();
+            //     });
+            });
+
+            /*  function updateCount(dragId, val) {
+                var cnt = numOfEachId[dragId] + val;
+                numOfEachId[dragId] = cnt;
+                var obj = $('li#'+dragId, $("ul", $trash));
+                $('.cc1', obj).text(cnt);
+              }*/
+    </script>
+</body>
+</html>
